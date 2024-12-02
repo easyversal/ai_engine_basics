@@ -1,0 +1,9 @@
+.cache
+.lock
+.wsdata
+
+_ide
+
+build
+logs
+
