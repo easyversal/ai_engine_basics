@@ -1,6 +1,6 @@
+#include "add_one.h"
 #include "constants.h"
 #include "graph.h"
-#include "kernel.h"
 
 constexpr auto BURST_LENGTH{64};
 constexpr auto BANDWIDTH{1000};
