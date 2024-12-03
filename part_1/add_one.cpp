@@ -1,3 +1,4 @@
+#include "constants.h"
 #include "kernel.h"
 
 #include <aie_api/aie.hpp>
