@@ -1,5 +1,6 @@
 .cache
 .lock
+.vscode
 .wsdata
 
 _ide

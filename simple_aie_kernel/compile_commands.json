@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "directory": "/home/ubuntu/Downloads/sandbox/simple_aie_kernel/_ide/_build",
+    "arguments": [
+      "/tools/Xilinx/Vitis/2024.1/aietools/tps/lnx64/gcc/bin/g++",
+      "-c",
+      "-I/tools/Xilinx/Vitis/2024.1/aietools/include",
+      "-I/home/ubuntu/Downloads/sandbox/simple_aie_kernel",
+      "-I/tools/Xilinx/Vitis/2024.1/aietools/include",
+      "/home/ubuntu/Downloads/sandbox/simple_aie_kernel/graph.cpp"
+    ],
+    "file": "/home/ubuntu/Downloads/sandbox/simple_aie_kernel/graph.cpp"
+  },
+  {
+    "directory": "/home/ubuntu/Downloads/sandbox/simple_aie_kernel/_ide/_build/simple_aie_kernel",
+    "command": "/tools/Xilinx/Vitis/2024.1/aietools/bin/aie_clang++ -fPIC -c -o wrap_weighted_sum.cpp.o -D__AIENGINE__ -D__AIEARCH__\u003d1 -std\u003dc++17 -D__X86SIM__ -D__PTHREAD_API__ -DHLS_STREAM_THREAD_SAFE -D__AIEARCH__\u003d1 -DAIE_OPTION_SCALAR_FLOAT_ON_VECTOR -I/tools/Xilinx/Vitis_HLS/2024.1/include -I/tools/Xilinx/Vitis/2024.1/aietools/include -I/tools/Xilinx/Vitis/2024.1/aietools/data/osci_systemc/include -I/tools/Xilinx/Vitis/2024.1/aietools/tps/boost_1_72_0 -I/tools/Xilinx/Vitis/2024.1/aietools/data/versal_prod/lib/runtime_cxx/libs/libcxx-9.0.0/include -I/tools/Xilinx/Vitis/2024.1/aietools/data/versal_prod/lib -I/tools/Xilinx/Vitis/2024.1/aietools/tps/lnx64/target/chessdir -I/tools/Xilinx/Vitis/2024.1/aietools/data/versal_prod/lib/designware/DWFC_fp/include -I/tools/Xilinx/Vitis/2024.1/aietools/data/versal_prod/lib/designware/DWFC_fp_multifunc/include -I/tools/Xilinx/Vitis/2024.1/aietools/data/versal_prod/lib/designware/dwfc_multifunc/include -include /tools/Xilinx/Vitis/2024.1/aietools/include/adf/x86sim/aieNative.h -std\u003dc++2a -stdlib\u003dlibc++ weighted_sum.cpp",
+    "file": "weighted_sum.cpp"
+  }
+]
