@@ -1,11 +1,13 @@
-#include "aie_api/aie.hpp"
+#include "kernel.h"
 
-void AddOne(adf::input_buffer<int32, adf::extents<256>> &restrict data_in, adf::output_buffer<int32, adf::extents<256>> &restrict data_out)
+#include <aie_api/aie.hpp>
+
+void AddOne(adf::input_buffer<AIE_BUFFER_TYPE, adf::extents<AIE_BUFFER_SIZE>> &restrict data_in, adf::output_buffer<AIE_BUFFER_TYPE, adf::extents<AIE_BUFFER_SIZE>> &restrict data_out)
 {
         auto in_iter{aie::begin(data_in)};
         auto out_iter{aie::begin(data_out)};
 
-        for (auto ii{0}; ii < 256; ++ii)
+        for (auto ii{0}; ii < AIE_BUFFER_SIZE; ++ii)
         {
                 const auto data_value{*in_iter};
                 ++in_iter;
