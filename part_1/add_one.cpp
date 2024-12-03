@@ -2,7 +2,7 @@
 
 #include <aie_api/aie.hpp>
 
-void AddOne(adf::input_buffer<AIE_BUFFER_TYPE, adf::extents<AIE_BUFFER_SIZE>> &restrict data_in, adf::output_buffer<AIE_BUFFER_TYPE, adf::extents<AIE_BUFFER_SIZE>> &restrict data_out)
+void AddOne(adf::input_buffer<AIE_BUFFER_TYPE> &restrict data_in, adf::output_buffer<AIE_BUFFER_TYPE> &restrict data_out)
 {
         auto in_iter{aie::begin(data_in)};
         auto out_iter{aie::begin(data_out)};
