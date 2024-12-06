@@ -23,32 +23,31 @@ SimpleGraph::SimpleGraph() : m_kernel{adf::kernel::create(AddOne)},
 #if defined(__AIESIM__) || defined(__X86SIM__)
 int main()
 {
-  constexpr auto ITERATION{4};
-  constexpr auto BLOCK_BYTES{ITERATION * AIE_BUFFER_SIZE * sizeof(AIE_BUFFER_TYPE)};
+  constexpr auto BLOCK_BYTES{AIE_BUFFER_SIZE * sizeof(AIE_BUFFER_TYPE)};
   auto data_in{(AIE_BUFFER_TYPE *)adf::GMIO::malloc(BLOCK_BYTES)};
   auto data_out{(AIE_BUFFER_TYPE *)adf::GMIO::malloc(BLOCK_BYTES)};
 
-  std::cout << "GMIO malloc completed\n";
+  std::cout << "Global memory allocation completed\n";
 
   AIE_BUFFER_TYPE data_value{};
-  for (auto gmio_index{0}; gmio_index < ITERATION * AIE_BUFFER_SIZE; ++gmio_index)
+  for (auto gmio_index{0}; gmio_index < AIE_BUFFER_SIZE; ++gmio_index)
   {
     data_in[gmio_index] = data_value;
     ++data_value;
   }
 
   simple_graph.init();
-  simple_graph.m_gmio_in.gm2aie_nb(data_in, BLOCK_BYTES);
-  simple_graph.run(ITERATION);
+  simple_graph.m_gmio_in.gm2aie(data_in, BLOCK_BYTES);
+  simple_graph.run(1);
   simple_graph.m_gmio_out.aie2gm(data_out, BLOCK_BYTES);
   simple_graph.end();
 
   auto errors{0};
-  for (auto ii{0}; ii < ITERATION * AIE_BUFFER_SIZE; ++ii)
+  for (auto ii{0}; ii < AIE_BUFFER_SIZE; ++ii)
   {
     if (data_out[ii] != data_in[ii] + 1)
     {
-      std::cout << "Error: dout[" << ii << "] = " << data_out[ii] << ", gold = " << data_in[ii] + 1 << '\n';
+      std::cout << "Error: data_out[" << ii << "] = " << data_out[ii] << ", expected = " << data_in[ii] + 1 << '\n';
       ++errors;
     }
   }
