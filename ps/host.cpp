@@ -18,10 +18,10 @@ int main(int argc, char **argv)
     constexpr auto MEMORY_GROUP{0};
 
     auto din_buffer{xrt::aie::bo(device, BLOCK_BYTES, xrt::bo::flags::normal, MEMORY_GROUP)};
-    auto data_in{din_buffer.map<int *>()};
+    auto data_in{din_buffer.map<AIE_BUFFER_TYPE *>()};
 
     auto dout_buffer{xrt::aie::bo(device, BLOCK_BYTES, xrt::bo::flags::normal, MEMORY_GROUP)};
-    auto data_out{dout_buffer.map<int *>()};
+    auto data_out{dout_buffer.map<AIE_BUFFER_TYPE *>()};
 
     std::cout << "Global memory allocation completed\n";
 
