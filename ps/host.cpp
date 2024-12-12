@@ -1,7 +1,7 @@
 #include "../aie_component/constants.h"
 #include "../aie_component/add_one.h"
 
-#include "xrt/xrt_aie.h"
+#include <xrt/xrt_aie.h>
 
 int main(int argc, char **argv)
 {
