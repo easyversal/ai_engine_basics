@@ -2,8 +2,6 @@
 #include "constants.h"
 #include "graph.h"
 
-SimpleGraph simple_graph{};
-
 constexpr auto BURST_LENGTH{64};
 constexpr auto BANDWIDTH{1000};
 
@@ -20,14 +18,22 @@ SimpleGraph::SimpleGraph() : m_kernel{adf::kernel::create(AddOne)},
   adf::connect(m_kernel.out[0], m_gmio_out.in[0]);
 }
 
+// Step 1 - Instantiate graph
+SimpleGraph simple_graph{};
+
 #if defined(__AIESIM__) || defined(__X86SIM__)
 int main()
 {
+
+  // Step 2 - Allocate global memory
+
   constexpr auto BLOCK_BYTES{AIE_BUFFER_SIZE * sizeof(AIE_BUFFER_TYPE)};
   auto data_in{(AIE_BUFFER_TYPE *)adf::GMIO::malloc(BLOCK_BYTES)};
   auto data_out{(AIE_BUFFER_TYPE *)adf::GMIO::malloc(BLOCK_BYTES)};
 
   std::cout << "Global memory allocation completed\n";
+
+  // Step 3 - Initialize input data
 
   AIE_BUFFER_TYPE data_value{};
   for (auto gmio_index{0}; gmio_index < AIE_BUFFER_SIZE; ++gmio_index)
@@ -36,11 +42,15 @@ int main()
     ++data_value;
   }
 
+  // Step 4 - Run graph
+
   simple_graph.init();
   simple_graph.m_gmio_in.gm2aie(data_in, BLOCK_BYTES);
   simple_graph.run(1);
   simple_graph.m_gmio_out.aie2gm(data_out, BLOCK_BYTES);
   simple_graph.end();
+
+  // Step 5 - Check results
 
   auto errors{0};
   for (auto ii{0}; ii < AIE_BUFFER_SIZE; ++ii)

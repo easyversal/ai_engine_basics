@@ -6,6 +6,8 @@
 int main(int argc, char **argv)
 {
 
+    // Step 1 - Instantiate graph
+
     constexpr auto DEVICE_INDEX{0};
     auto device{xrt::device(DEVICE_INDEX)};
 
@@ -13,6 +15,8 @@ int main(int argc, char **argv)
     const auto uuid{device.load_xclbin(xclbin_path)};
 
     auto simple_graph{xrt::graph(device, uuid, "simple_graph")};
+
+    // Step 2 - Allocate global memory
 
     constexpr auto BLOCK_BYTES{AIE_BUFFER_SIZE * sizeof(AIE_BUFFER_TYPE)};
     constexpr auto MEMORY_GROUP{0};
@@ -25,6 +29,8 @@ int main(int argc, char **argv)
 
     std::cout << "Global memory allocation completed\n";
 
+    // Step 3 - Initialize input data
+
     AIE_BUFFER_TYPE data_value{};
     for (auto gmio_index{0}; gmio_index < AIE_BUFFER_SIZE; ++gmio_index)
     {
@@ -32,11 +38,15 @@ int main(int argc, char **argv)
         ++data_value;
     }
 
+    // Step 4 - Run graph
+
     constexpr auto OFFSET{0};
     din_buffer.sync("simple_graph.m_gmio_in", XCL_BO_SYNC_BO_GMIO_TO_AIE, BLOCK_BYTES, OFFSET);
     simple_graph.run(1);
     dout_buffer.sync("simple_graph.m_gmio_out", XCL_BO_SYNC_BO_AIE_TO_GMIO, BLOCK_BYTES, OFFSET);
     simple_graph.end();
+
+    // Step 5 - Check results
 
     auto errors{0};
     for (auto ii{0}; ii < AIE_BUFFER_SIZE; ++ii)
